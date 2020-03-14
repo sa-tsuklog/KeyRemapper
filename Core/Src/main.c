@@ -104,14 +104,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int i=0;
   while (1)
   {
-	updateLedState();
-
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
+	updateLedState();
   }
   /* USER CODE END 3 */
 }

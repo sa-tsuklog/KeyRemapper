@@ -210,9 +210,9 @@ static const HID_Report_ItemTypedef imp_0_key_array =
   6,     /*count (only for array items)*/
   0,     /*signed?*/
   0,     /*min value read can return*/
-  101,   /*max value read can return*/
+  145,   /*max value read can return*/
   0,     /*min vale device can report*/
-  101,   /*max value device can report*/
+  145,   /*max value device can report*/
   1      /*resolution*/
 };
 

@@ -115,19 +115,30 @@ void USBH_HID_EventCallback(USBH_HandleTypeDef *phost){
 	USBD_CUSTOM_HID_SendReport(&hUsbDeviceHS, (uint8_t*)&keyboardHID, sizeof(struct keyboardHID_t));
 }
 
-
-uint8_t ledState = 0;
+int8_t ledState = 0;
 uint8_t prevLedState = 0;
 USBH_StatusTypeDef usbhState = USBH_OK;
+int32_t count = 0;
 
 void setLed(uint8_t led){
 	ledState = led;
 }
 
 void updateLedState(){
-	if((ledState != prevLedState) || (usbhState == USBH_BUSY)){
-		prevLedState = ledState;
-		usbhState = USBH_HID_SetReport(&hUsbHostFS,0x02,0,&ledState,1);
+	HID_HandleTypeDef *HID_Handle = (HID_HandleTypeDef *) hUsbHostFS.pActiveClass->pData;
+
+	if(HID_Handle->state == HID_POLL){
+		if((ledState != prevLedState) || (usbhState == USBH_BUSY)){
+			prevLedState = ledState;
+			usbhState = USBH_HID_SetReport(&hUsbHostFS,0x02,0,&ledState,1);
+		}
 	}
+
+
+
+//	if(((ledState != prevLedState) && (hUsbHostFS.gState == HOST_CLASS)) || (usbhState == USBH_BUSY)){
+//		prevLedState = ledState;
+//		usbhState = USBH_HID_SetReport(&hUsbHostFS,0x02,0,&ledState,1);
+//	}
 }
 
